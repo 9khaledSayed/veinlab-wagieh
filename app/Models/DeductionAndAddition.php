@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class DeductionAndAddition extends Model
+{
+    use HasFactory;
+    protected $guarded = [];
+    protected $casts = ['created_at', 'updated_at' => 'date:Y-m-d  h:i a'];
+
+    protected $appends = ['create_since'];
+
+
+    public function getCreateSinceAttribute()
+    {
+        return $this->created_at?->diffForHumans();
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->attributes['name_'.getLocale()];
+    }
+}
